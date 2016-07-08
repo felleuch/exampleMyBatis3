@@ -202,4 +202,71 @@
       role_desc = #{role_desc,jdbcType=VARCHAR}
     where role_id = #{role_id,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMap" type="com.malcolm.daotest.mybatis.model.Role">
+    <id column="role_id" jdbcType="INTEGER" property="role_id" />
+    <result column="role_name" jdbcType="VARCHAR" property="role_name" />
+    <result column="role_desc" jdbcType="VARCHAR" property="role_desc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_id, role_name, role_desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where role_id = #{role_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from role
+    where role_id = #{role_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.malcolm.daotest.mybatis.model.Role">
+    insert into role (role_id, role_name, role_desc
+      )
+    values (#{role_id,jdbcType=INTEGER}, #{role_name,jdbcType=VARCHAR}, #{role_desc,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.malcolm.daotest.mybatis.model.Role">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="role_id != null">
+        role_id,
+      </if>
+      <if test="role_name != null">
+        role_name,
+      </if>
+      <if test="role_desc != null">
+        role_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="role_id != null">
+        #{role_id,jdbcType=INTEGER},
+      </if>
+      <if test="role_name != null">
+        #{role_name,jdbcType=VARCHAR},
+      </if>
+      <if test="role_desc != null">
+        #{role_desc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.malcolm.daotest.mybatis.model.Role">
+    update role
+    <set>
+      <if test="role_name != null">
+        role_name = #{role_name,jdbcType=VARCHAR},
+      </if>
+      <if test="role_desc != null">
+        role_desc = #{role_desc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{role_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.malcolm.daotest.mybatis.model.Role">
+    update role
+    set role_name = #{role_name,jdbcType=VARCHAR},
+      role_desc = #{role_desc,jdbcType=VARCHAR}
+    where role_id = #{role_id,jdbcType=INTEGER}
+  </update>
 </mapper>
