@@ -255,4 +255,131 @@
       update_date = #{update_date,jdbcType=java.sql.Timestamp}
     where project_id = #{project_id,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMap" type="com.malcolm.daotest.mybatis.model.Project">
+    <id column="project_id" jdbcType="INTEGER" property="project_id" />
+    <result column="project_name" jdbcType="VARCHAR" property="project_name" />
+    <result column="project_desc" jdbcType="VARCHAR" property="project_desc" />
+    <result column="project_manager" jdbcType="INTEGER" property="project_manager" />
+    <result column="project_startdate" jdbcType="java.sql.Timestamp" property="project_startdate" />
+    <result column="project_enddate" jdbcType="java.sql.Timestamp" property="project_enddate" />
+    <result column="update_user" jdbcType="VARCHAR" property="update_user" />
+    <result column="update_date" jdbcType="java.sql.Timestamp" property="update_date" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    project_id, project_name, project_desc, project_manager, project_startdate, project_enddate, 
+    update_user, update_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from project
+    where project_id = #{project_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from project
+    where project_id = #{project_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.malcolm.daotest.mybatis.model.Project">
+    insert into project (project_id, project_name, project_desc, 
+      project_manager, project_startdate, 
+      project_enddate, update_user, 
+      update_date)
+    values (#{project_id,jdbcType=INTEGER}, #{project_name,jdbcType=VARCHAR}, #{project_desc,jdbcType=VARCHAR}, 
+      #{project_manager,jdbcType=INTEGER}, #{project_startdate,jdbcType=java.sql.Timestamp}, 
+      #{project_enddate,jdbcType=java.sql.Timestamp}, #{update_user,jdbcType=VARCHAR}, 
+      #{update_date,jdbcType=java.sql.Timestamp})
+  </insert>
+  <insert id="insertSelective" parameterType="com.malcolm.daotest.mybatis.model.Project">
+    insert into project
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="project_id != null">
+        project_id,
+      </if>
+      <if test="project_name != null">
+        project_name,
+      </if>
+      <if test="project_desc != null">
+        project_desc,
+      </if>
+      <if test="project_manager != null">
+        project_manager,
+      </if>
+      <if test="project_startdate != null">
+        project_startdate,
+      </if>
+      <if test="project_enddate != null">
+        project_enddate,
+      </if>
+      <if test="update_user != null">
+        update_user,
+      </if>
+      <if test="update_date != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="project_id != null">
+        #{project_id,jdbcType=INTEGER},
+      </if>
+      <if test="project_name != null">
+        #{project_name,jdbcType=VARCHAR},
+      </if>
+      <if test="project_desc != null">
+        #{project_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="project_manager != null">
+        #{project_manager,jdbcType=INTEGER},
+      </if>
+      <if test="project_startdate != null">
+        #{project_startdate,jdbcType=java.sql.Timestamp},
+      </if>
+      <if test="project_enddate != null">
+        #{project_enddate,jdbcType=java.sql.Timestamp},
+      </if>
+      <if test="update_user != null">
+        #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_date != null">
+        #{update_date,jdbcType=java.sql.Timestamp},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.malcolm.daotest.mybatis.model.Project">
+    update project
+    <set>
+      <if test="project_name != null">
+        project_name = #{project_name,jdbcType=VARCHAR},
+      </if>
+      <if test="project_desc != null">
+        project_desc = #{project_desc,jdbcType=VARCHAR},
+      </if>
+      <if test="project_manager != null">
+        project_manager = #{project_manager,jdbcType=INTEGER},
+      </if>
+      <if test="project_startdate != null">
+        project_startdate = #{project_startdate,jdbcType=java.sql.Timestamp},
+      </if>
+      <if test="project_enddate != null">
+        project_enddate = #{project_enddate,jdbcType=java.sql.Timestamp},
+      </if>
+      <if test="update_user != null">
+        update_user = #{update_user,jdbcType=VARCHAR},
+      </if>
+      <if test="update_date != null">
+        update_date = #{update_date,jdbcType=java.sql.Timestamp},
+      </if>
+    </set>
+    where project_id = #{project_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.malcolm.daotest.mybatis.model.Project">
+    update project
+    set project_name = #{project_name,jdbcType=VARCHAR},
+      project_desc = #{project_desc,jdbcType=VARCHAR},
+      project_manager = #{project_manager,jdbcType=INTEGER},
+      project_startdate = #{project_startdate,jdbcType=java.sql.Timestamp},
+      project_enddate = #{project_enddate,jdbcType=java.sql.Timestamp},
+      update_user = #{update_user,jdbcType=VARCHAR},
+      update_date = #{update_date,jdbcType=java.sql.Timestamp}
+    where project_id = #{project_id,jdbcType=INTEGER}
+  </update>
 </mapper>

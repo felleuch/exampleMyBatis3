@@ -135,4 +135,71 @@
       designation_desc = #{designation_desc,jdbcType=VARCHAR}
     where designation_id = #{designation_id,jdbcType=INTEGER}
   </update>
+  <resultMap id="BaseResultMap" type="com.malcolm.daotest.mybatis.model.Designation">
+    <id column="designation_id" jdbcType="INTEGER" property="designation_id" />
+    <result column="designation_name" jdbcType="VARCHAR" property="designation_name" />
+    <result column="designation_desc" jdbcType="VARCHAR" property="designation_desc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    designation_id, designation_name, designation_desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from designation
+    where designation_id = #{designation_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="Integer">
+    delete from designation
+    where designation_id = #{designation_id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.malcolm.daotest.mybatis.model.Designation">
+    insert into designation (designation_id, designation_name, 
+      designation_desc)
+    values (#{designation_id,jdbcType=INTEGER}, #{designation_name,jdbcType=VARCHAR}, 
+      #{designation_desc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.malcolm.daotest.mybatis.model.Designation">
+    insert into designation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="designation_id != null">
+        designation_id,
+      </if>
+      <if test="designation_name != null">
+        designation_name,
+      </if>
+      <if test="designation_desc != null">
+        designation_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="designation_id != null">
+        #{designation_id,jdbcType=INTEGER},
+      </if>
+      <if test="designation_name != null">
+        #{designation_name,jdbcType=VARCHAR},
+      </if>
+      <if test="designation_desc != null">
+        #{designation_desc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.malcolm.daotest.mybatis.model.Designation">
+    update designation
+    <set>
+      <if test="designation_name != null">
+        designation_name = #{designation_name,jdbcType=VARCHAR},
+      </if>
+      <if test="designation_desc != null">
+        designation_desc = #{designation_desc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where designation_id = #{designation_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.malcolm.daotest.mybatis.model.Designation">
+    update designation
+    set designation_name = #{designation_name,jdbcType=VARCHAR},
+      designation_desc = #{designation_desc,jdbcType=VARCHAR}
+    where designation_id = #{designation_id,jdbcType=INTEGER}
+  </update>
 </mapper>
