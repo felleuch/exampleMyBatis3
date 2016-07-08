@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <mappers>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/DepartmentMapper.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/DesignationMapper.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/EmployeeMapper.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/EmployeeMapperExt.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/ProjectEmployeeMapper.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/ProjectMapper.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/RoleEmployeeMapper.xml"/>
+      <mapper resource="com/malcolm/daotest/mybatis/sqlmap/RoleMapper.xml"/>
+  </mappers>
+</configuration>

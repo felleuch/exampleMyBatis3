@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		
+<!-- 
+This file is used only to configure the Hibernate Console Configuration and is not used at runtime
+ -->		
+<hibernate-configuration>
+    <session-factory name="SessionFactory">
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/employee_app</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.default_schema">employee_app</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <mapping class="com.malcolm.daotest.hibernate.model.Department"/>
+        <mapping class="com.malcolm.daotest.hibernate.model.Designation"/>
+        <mapping class="com.malcolm.daotest.hibernate.model.Employee"/>
+        <mapping class="com.malcolm.daotest.hibernate.model.Project"/>
+        <mapping class="com.malcolm.daotest.hibernate.model.ProjectEmployee"/>
+        <mapping class="com.malcolm.daotest.hibernate.model.Role"/>
+        <mapping class="com.malcolm.daotest.hibernate.model.RoleEmployee"/>
+    </session-factory>
+</hibernate-configuration>

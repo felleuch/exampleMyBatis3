@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <!-- Update this to the correct path entry for the mysql jar file  -->
+    <classPathEntry location="C:\developpement\iworkspace_test\exampleMyBatis3\lib\mysql-connector-java-5.1.30.jar" />
+  
+  <context id="employeeInfoApp" targetRuntime="MyBatis3">
+    <commentGenerator>
+       <property name="suppressDate" value="true" />
+       <property name="suppressAllComments" value="true" />
+    </commentGenerator>  
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/employee_app" userId="root" password="root" />
+
+
+    <javaTypeResolver>
+       <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+
+    <javaModelGenerator targetPackage="com.malcolm.daotest.mybatis.model" targetProject="generatedSources/src/main/java" />
+
+
+    <sqlMapGenerator targetPackage="com.malcolm.daotest.mybatis.sqlmap" targetProject="generatedSources/src/main/resources" />
+
+
+    <javaClientGenerator targetPackage="com.malcolm.daotest.mybatis.mapper" targetProject="generatedSources/src/main/java" type="XMLMAPPER" />
+
+
+    <table tableName="department" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="dept_id" property="dept_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="dept_name" property="dept_name" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="dept_desc" property="dept_desc" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="dept_mgr" property="dept_mgr" jdbcType="INTEGER" javaType="Integer"/>
+    </table>
+    <table   tableName="employee" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="emp_id" property="emp_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="emp_first_name" property="emp_first_name" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="emp_last_name" property="emp_last_name" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="emp_start_date" property="emp_start_date" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+        <columnOverride column="emp_end_date" property="emp_end_date" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+        <columnOverride column="designation_id" property="designation_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="dept_id" property="dept_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="mgr_id" property="mgr_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="update_user" property="update_user" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="update_date" property="update_date" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+    </table>
+    <table tableName="project" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="project_id" property="project_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="project_name" property="project_name" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="project_desc" property="project_desc" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="project_manager" property="project_manager" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="project_startdate" property="project_startdate" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+        <columnOverride column="project_enddate" property="project_enddate" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+        <columnOverride column="update_user" property="update_user" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="update_date" property="update_date" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+    </table>
+    <table tableName="project_employee" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="project_emp_assn_id" property="project_emp_assn_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="project_id" property="project_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="emp_id" property="emp_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="update_user" property="update_user" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="update_date" property="update_date" jdbcType="java.sql.Timestamp" javaType="java.sql.Timestamp"/>
+    </table>
+    <table tableName="role" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="role_id" property="role_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="role_name" property="role_name" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="role_desc" property="role_desc" jdbcType="VARCHAR" javaType="String"/>
+    </table>
+    <table tableName="role_employee" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="role_emp_assn_id" property="role_emp_assn_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="role_id" property="role_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="emp_id" property="emp_id" jdbcType="INTEGER" javaType="Integer"/>
+    </table>
+    <table tableName="designation" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false" selectByExampleQueryId="false">
+        <columnOverride column="designation_id" property="designation_id" jdbcType="INTEGER" javaType="Integer"/>
+        <columnOverride column="designation_name" property="designation_name" jdbcType="VARCHAR" javaType="String"/>
+        <columnOverride column="designation_desc" property="designation_desc" jdbcType="VARCHAR" javaType="String"/>
+    </table>
+  </context>
+</generatorConfiguration>

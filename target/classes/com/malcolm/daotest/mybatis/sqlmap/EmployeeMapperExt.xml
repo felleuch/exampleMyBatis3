@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt" >
+	<!-- getAllEmployeesSimple -->
+	<select id="getAllEmployeesSimple" resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapper.BaseResultMap">
+		SELECT  
+		  	<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapper.Base_Column_List"/>
+		FROM
+			employee  
+	</select>
+	
+	<sql id="EmployeeInfo_Column_List" >
+		employeeInfo.emp_id as 'employeeInfo.emp_id',  
+		employeeInfo.emp_first_name as 'employeeInfo.emp_first_name', 
+		employeeInfo.emp_last_name as 'employeeInfo.emp_last_name', 
+		employeeInfo.emp_start_date as 'employeeInfo.emp_start_date', 
+		employeeInfo.emp_end_date as 'employeeInfo.emp_end_date', 
+		employeeInfo.designation_id as 'employeeInfo.designation_id', 
+		employeeInfo.dept_id as 'employeeInfo.dept_id', 
+		employeeInfo.mgr_id as 'employeeInfo.mgr_id', 
+		employeeInfo.update_user as 'employeeInfo.update_user', 
+		employeeInfo.update_date as 'employeeInfo.update_date'
+	</sql>
+	<sql id="DesignationInfo_Column_List" >
+		designationInfo.designation_id as 'designationInfo.designation_id',
+		designationInfo.designation_name as 'designationInfo.designation_name'
+	</sql>
+	<sql id="DepartmentInfo_Column_List" >
+		departmentInfo.dept_id as 'departmentInfo.dept_id',
+		departmentInfo.dept_name as 'departmentInfo.dept_name',
+		departmentInfo.dept_desc as 'departmentInfo.dept_desc'
+	</sql>
+	<sql id="DeptManagerInfo_Column_List" >
+		deptManagerInfo.emp_id as 'deptManagerInfo.emp_id',
+		deptManagerInfo.emp_first_name as 'deptManagerInfo.emp_first_name',
+		deptManagerInfo.emp_last_name as 'deptManagerInfo.emp_last_name',
+		deptManagerInfo.designation_id as 'deptManagerInfo.designation_id'
+	</sql>
+	<sql id="ManagerInfo_Column_List" >
+		managerInfo.emp_id as 'managerInfo.emp_id',
+		managerInfo.emp_first_name as 'managerInfo.emp_first_name',
+		managerInfo.emp_last_name as 'managerInfo.emp_last_name',
+		managerInfo.designation_id as 'managerInfo.designation_id'
+	</sql>
+	<sql id="RoleAssnInfo_Column_List" >
+		roleAssnInfo.role_emp_assn_id as 'roleAssnInfo.role_emp_assn_id',
+		roleAssnInfo.role_id as 'roleAssnInfo.role_id',
+  		roleAssnInfo.emp_id as 'roleAssnInfo.emp_id'
+  	</sql>
+	<sql id="RoleInfo_Column_List" >
+		roleInfo.role_id as 'roleInfo.role_id',
+  		roleInfo.role_name as 'roleInfo.role_name',
+  		roleInfo.role_desc as 'roleInfo.role_desc'
+	</sql>
+	<sql id="EmployeeProjectAssnInfo_Column_List" >
+		employeeProjectAssnInfo.project_emp_assn_id as 'employeeProjectAssnInfo.project_emp_assn_id',
+  		employeeProjectAssnInfo.project_id as 'employeeProjectAssnInfo.project_id',
+		employeeProjectAssnInfo.emp_id as 'employeeProjectAssnInfo.emp_id',
+		employeeProjectAssnInfo.update_user as 'employeeProjectAssnInfo.update_user',
+		employeeProjectAssnInfo.update_date as 'employeeProjectAssnInfo.update_date'
+	</sql>
+	<sql id="ProjectInfo_Column_List" >
+		projectInfo.project_id as 'projectInfo.project_id',
+		projectInfo.project_name as 'projectInfo.project_name',
+		projectInfo.project_desc as 'projectInfo.project_desc',
+		projectInfo.project_manager as 'projectInfo.project_manager',
+		projectInfo.project_startdate as 'projectInfo.project_startdate',
+		projectInfo.project_enddate as 'projectInfo.project_enddate',
+		projectInfo.update_user as 'projectInfo.update_user',
+		projectInfo.update_date as 'projectInfo.update_date'
+	</sql>
+	<sql id="ProjectManagerInfo_Column_List" >
+		projectManagerInfo.emp_id as 'projectManagerInfo.emp_id',
+		projectManagerInfo.emp_first_name as 'projectManagerInfo.emp_first_name',
+		projectManagerInfo.emp_last_name as 'projectManagerInfo.emp_last_name',
+		projectManagerInfo.designation_id as 'projectManagerInfo.designation_id'
+	</sql>
+			
+	<!-- Result Map with Collection and Associations -->
+	<resultMap id="EmployeesMap" type="com.malcolm.daotest.mybatis.model.Employee" >
+		<id column="employeeInfo.emp_id" property="emp_id" jdbcType="INTEGER" />
+		<result column="employeeInfo.emp_first_name" property="emp_first_name" jdbcType="VARCHAR" />
+		<result column="employeeInfo.emp_last_name" property="emp_last_name" jdbcType="VARCHAR" />
+		<result column="employeeInfo.emp_start_date" property="emp_start_date" jdbcType="TIMESTAMP" />
+		<result column="employeeInfo.emp_end_date" property="emp_end_date" jdbcType="TIMESTAMP" />
+		<result column="employeeInfo.designation_id" property="designation_id" jdbcType="INTEGER" />
+		<result column="employeeInfo.dept_id" property="dept_id" jdbcType="INTEGER" />
+		<result column="employeeInfo.mgr_id" property="mgr_id" jdbcType="INTEGER" />
+		<result column="employeeInfo.update_user" property="update_user" jdbcType="VARCHAR" />
+		<result column="employeeInfo.update_date" property="update_date" jdbcType="TIMESTAMP" />
+		<association property="designation" javaType="com.malcolm.daotest.mybatis.model.Designation">
+			<id 	column="designationInfo.designation_id" property="designation_id" jdbcType="INTEGER" />
+			<result column="designationInfo.designation_name" property="designation_name" jdbcType="VARCHAR" />
+		</association>
+		<association property="department" javaType="com.malcolm.daotest.mybatis.model.Department">
+			<id column="departmentInfo.dept_id" property="dept_id" jdbcType="INTEGER" />
+			<result column="departmentInfo.dept_name" property="dept_name" jdbcType="VARCHAR" />
+			<result column="departmentInfo.dept_desc" property="dept_desc" jdbcType="VARCHAR" />
+			<result column="departmentInfo.dept_mgr" property="dept_mgr" jdbcType="INTEGER" />
+			<association property="deptManager" javaType="com.malcolm.daotest.mybatis.model.Employee">
+				<id column="deptManagerInfo.emp_id" property="emp_id" jdbcType="INTEGER" />
+				<result column="deptManagerInfo.emp_first_name" property="emp_first_name" jdbcType="VARCHAR" />
+				<result column="deptManagerInfo.emp_last_name" property="emp_last_name" jdbcType="VARCHAR" />
+				<result column="deptManagerInfo.designation_id" property="designation_id" jdbcType="INTEGER" />
+			</association>
+		</association>
+		<association property="manager" javaType="com.malcolm.daotest.mybatis.model.Employee">
+			<id column="managerInfo.emp_id" property="emp_id" jdbcType="INTEGER" />
+			<result column="managerInfo.emp_first_name" property="emp_first_name" jdbcType="VARCHAR" />
+			<result column="managerInfo.emp_last_name" property="emp_last_name" jdbcType="VARCHAR" />
+			<result column="managerInfo.designation_id" property="designation_id" jdbcType="INTEGER" />
+		</association>
+		<collection property="employeeRoleAssn" ofType="com.malcolm.daotest.mybatis.model.RoleEmployee">
+			<id column="roleAssnInfo.role_emp_assn_id"  property="role_emp_assn_id" jdbcType="INTEGER" />
+			<result column="roleAssnInfo.role_id" property="role_id" jdbcType="INTEGER" />
+  			<result column="roleAssnInfo.emp_id" property="emp_id" jdbcType="INTEGER" />
+  			<association property="role" javaType="com.malcolm.daotest.mybatis.model.Role">
+  					<id column="roleInfo.role_id" property="role_id" jdbcType="INTEGER" />
+  					<result column="roleInfo.role_name" property="role_name" jdbcType="VARCHAR" />
+  					<result column="roleInfo.role_desc" property="role_desc" jdbcType="VARCHAR" />
+  			</association>
+		</collection>
+		<collection property="employeeProjectAssn" ofType="com.malcolm.daotest.mybatis.model.ProjectEmployee">
+			<id column="employeeProjectAssnInfo.project_emp_assn_id"  property="project_emp_assn_id" jdbcType="INTEGER" />
+			<result column="employeeProjectAssnInfo.project_id" property="project_id" jdbcType="INTEGER" />
+			<result column="employeeProjectAssnInfo.emp_id" property="emp_id" jdbcType="INTEGER" />
+			<result column="employeeProjectAssnInfo.update_user" property="update_user" jdbcType="VARCHAR" />
+			<result column="employeeProjectAssnInfo.update_date" property="update_date" jdbcType="TIMESTAMP" />
+			<association property="project" javaType="com.malcolm.daotest.mybatis.model.Project">
+					<id column="projectInfo.project_id"  property="project_id" jdbcType="INTEGER" />
+					<result column="projectInfo.project_name" property="project_name" jdbcType="VARCHAR" />
+					<result column="projectInfo.project_desc" property="project_desc" jdbcType="VARCHAR" />
+					<result column="projectInfo.project_manager" property="project_manager" jdbcType="INTEGER" />
+					<result column="projectInfo.project_startdate" property="project_startdate" jdbcType="TIMESTAMP" />
+					<result column="projectInfo.project_enddate" property="project_enddate" jdbcType="TIMESTAMP" />
+					<result column="projectInfo.update_user" property="update_user" jdbcType="VARCHAR" />
+					<result column="projectInfo.update_date" property="update_date" jdbcType="TIMESTAMP" />
+					<association property="manager" javaType="com.malcolm.daotest.mybatis.model.Employee">
+						<id 	column="projectManagerInfo.emp_id" property="emp_id" jdbcType="INTEGER" />
+						<result column="projectManagerInfo.emp_first_name" property="emp_first_name" jdbcType="VARCHAR" />
+						<result column="projectManagerInfo.emp_last_name" property="emp_last_name" jdbcType="VARCHAR" />
+						<result column="projectManagerInfo.designation_id" property="designation_id" jdbcType="INTEGER" />
+					</association>
+			</association>
+		</collection>
+	</resultMap>
+	
+	<!-- Get All Employees -->
+	<select id="getAllEmployees" resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+	</select>
+	
+	<!-- Get Employees By Project ID -->
+	<select id="getEmployeesByProjectId" parameterType="Integer"  resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		projectInfo.project_id = #{projectId,jdbcType=INTEGER}		
+	</select>
+	
+	<!-- Get Employees By Project Name -->
+	<select id="getEmployeesByProjectName" parameterType="String"  resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		projectInfo.project_name = #{projectName,jdbcType=VARCHAR}		
+	</select>
+	
+	<!-- Get Employees By Role ID -->
+	<select id="getEmployeesByRoleId" parameterType="Integer"   resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		roleInfo.role_id = #{roleId,jdbcType=INTEGER}		
+	</select>
+	
+	<!-- Get Employees By Role Name-->
+	<select id="getEmployeesByRoleName" parameterType="String"   resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		roleInfo.role_name = #{roleName,jdbcType=VARCHAR}		
+	</select>
+	
+	<!-- Get Employees By Department ID -->
+	<select id="getEmployeesByDepartmentId" parameterType="Integer"   resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		employeeInfo.dept_id = #{departmentId,jdbcType=INTEGER}		
+	</select>
+	
+	<!-- Get Employees By Department Name-->
+	<select id="getEmployeesByDepartmentName" parameterType="String"   resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		departmentInfo.dept_name = #{departmentName,jdbcType=VARCHAR}		
+	</select>
+	
+	<!-- Get Employees By Manager ID -->
+	<select id="getEmployeesByManagerId" parameterType="Integer"   resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		employeeInfo.mgr_id = #{managerId,jdbcType=INTEGER}		
+	</select>
+	
+	<!-- Get Employees By First Name-->
+	<select id="getEmployeesByFirstName" parameterType="String"   resultMap="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeesMap"> 
+		SELECT
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeInfo_Column_List" />,	
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DesignationInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DepartmentInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.DeptManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ManagerInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.RoleInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.EmployeeProjectAssnInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectInfo_Column_List" />,
+			<include refid="com.malcolm.daotest.mybatis.mapper.EmployeeMapperExt.ProjectManagerInfo_Column_List" />
+		FROM
+			employee employeeInfo
+		LEFT OUTER JOIN 	designation     	designationInfo 			on employeeInfo.designation_id 			= designationInfo.designation_id
+		LEFT OUTER JOIN 	department      	departmentInfo 				on employeeInfo.dept_id 	   			= departmentInfo.dept_id
+		LEFT JOIN  			employee 	    	deptManagerInfo 			on departmentInfo.dept_mgr 	   			= deptManagerInfo.emp_id
+		LEFT OUTER JOIN  	employee 	    	managerInfo 				on employeeInfo.mgr_id 	  	   			= managerInfo.emp_id
+		LEFT OUTER JOIN 	role_employee 		roleAssnInfo 				on employeeInfo.emp_id 	  	   			= roleAssnInfo.emp_id 
+		LEFT JOIN 			role 				roleInfo 					on roleAssnInfo.role_id 	   			= roleInfo.role_id 
+		LEFT OUTER JOIN 	project_employee 	employeeProjectAssnInfo 	on employeeInfo.emp_id 	  	   			= employeeProjectAssnInfo.emp_id
+		LEFT JOIN 			project 			projectInfo 				on employeeProjectAssnInfo.project_id 	= projectInfo.project_id
+		LEFT JOIN 			employee 			projectManagerInfo 			on projectInfo.project_manager			= projectManagerInfo.emp_id	
+		WHERE 
+	  		employeeInfo.emp_first_name LIKE #{employeeName,jdbcType=VARCHAR}		
+	</select>
+	
+	
+</mapper>
