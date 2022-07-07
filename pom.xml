@@ -14,7 +14,7 @@
         <hibernate.version>4.3.5.Final</hibernate.version>
         <mybatis.version>3.2.7</mybatis.version>
         <metrics.version>3.0.2</metrics.version>
-        <jamon.version>2.75</jamon.version>
+        <jamon.version>2.80</jamon.version>
     </properties>
     <build>
         <plugins>
